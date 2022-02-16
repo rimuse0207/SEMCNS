@@ -94,21 +94,21 @@ const PersonApplyContentSelectTablePage = () => {
         }
     };
 
-    const clicksCheck = () => {
-        const getData = [];
-        for (var i = 0; i < DateMonthCheck.FirstTableData.length; i++) {
-            if (DateMonthCheck.FirstTableData[i].clickCheck) {
-                getData.push(DateMonthCheck.FirstTableData[i]);
-            }
-        }
-        for (var i = 0; i < DateMonthCheck.SecondTableData.length; i++) {
-            if (DateMonthCheck.SecondTableData[i].clickCheck) {
-                getData.push(DateMonthCheck.SecondTableData[i]);
-            }
-        }
-        setClickedDateData(getData);
-        console.log(getData);
-    };
+    // const clicksCheck = () => {
+    //     const getData = [];
+    //     for (var i = 0; i < DateMonthCheck.FirstTableData.length; i++) {
+    //         if (DateMonthCheck.FirstTableData[i].clickCheck) {
+    //             getData.push(DateMonthCheck.FirstTableData[i]);
+    //         }
+    //     }
+    //     for (var i = 0; i < DateMonthCheck.SecondTableData.length; i++) {
+    //         if (DateMonthCheck.SecondTableData[i].clickCheck) {
+    //             getData.push(DateMonthCheck.SecondTableData[i]);
+    //         }
+    //     }
+    //     setClickedDateData(getData);
+    //     console.log(getData);
+    // };
 
     const handleMinusCalendar = () => {
         setGetData(GetData.clone().subtract(14, 'day'));
@@ -128,13 +128,7 @@ const PersonApplyContentSelectTablePage = () => {
             moment(list.date).format('YYYY-MM-DD') === moment(data.date).format('YYYY-MM-DD') ? { ...list, clickCheck: true } : list
         );
         console.log('bbbb', b);
-        // const c = {
-        //     ...DateMonthCheck,{
-        //         DateMonthCheck.SecondData: b
-        //     }
 
-        // };
-        // console.log("ccccc",c)
         setDateMonthCheck({
             ...DateMonthCheck,
             FirstTableData: a,
@@ -156,11 +150,15 @@ const PersonApplyContentSelectTablePage = () => {
                                     <MdOutlineArrowBackIos onClick={handleMinusCalendar}></MdOutlineArrowBackIos>
                                 </td>
                                 {DateMonthCheck.FirstTableMonthDataCheck ? (
-                                    <th colSpan={DateMonthCheck.FirstTableMonthLength}>{DateMonthCheck.FirstTableMonth}</th>
+                                    <th colSpan={DateMonthCheck.FirstTableMonthLength}>
+                                        {moment(DateMonthCheck.FirstTableMonth).format('YYYY-MM')}
+                                    </th>
                                 ) : (
                                     <></>
                                 )}
-                                <th colSpan={DateMonthCheck.SecondTableMonthLength}>{DateMonthCheck.SecondTableMonth}</th>
+                                <th colSpan={DateMonthCheck.SecondTableMonthLength}>
+                                    {moment(DateMonthCheck.SecondTableMonth).format('YYYY-MM')}
+                                </th>
                                 <td className="PersonalApplyBodyConent_ApplyContents_CalendarTable_ArrowClick" rowSpan={4}>
                                     <MdOutlineArrowForwardIos onClick={handlePlusCalendar}></MdOutlineArrowForwardIos>
                                 </td>

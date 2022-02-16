@@ -20,6 +20,7 @@ export const Container = ({ setSelectApplyNames, SelectApplyNames }) => {
     {
         const [cards, setCards] = useState(SelectApplyNames);
         const moveCard = useCallback((dragIndex, hoverIndex) => {
+            console.log('움직입니다.');
             setCards(prevCards =>
                 update(prevCards, {
                     $splice: [
@@ -29,12 +30,30 @@ export const Container = ({ setSelectApplyNames, SelectApplyNames }) => {
                 })
             );
         }, []);
+        const handleDeleteNames = data => {
+            console.log('adadad', cards);
+            const a = cards.filter((list, i) => {
+                return list.text === data.text ? '' : list;
+            });
+
+            setCards(a);
+        };
         const renderCard = useCallback((card, index) => {
-            return <Card key={card.id} index={index} id={card.id} text={card.text} moveCard={moveCard} />;
+            console.log(card);
+            return (
+                <Card
+                    key={card.id}
+                    index={index}
+                    id={card.id}
+                    text={card.text}
+                    moveCard={moveCard}
+                    handleDeleteNames={data => handleDeleteNames(data)}
+                />
+            );
         }, []);
 
         useEffect(() => {
-            console.log(cards);
+            console.log('변경된 CARDS', cards);
             setSelectApplyNames(cards);
         }, [cards]);
 
@@ -43,7 +62,21 @@ export const Container = ({ setSelectApplyNames, SelectApplyNames }) => {
                 <div>
                     <input></input>
                 </div>
-                <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>
+                {/* <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div> */}
+                <div style={style}>
+                    {cards.map((card, i) => {
+                        return (
+                            <Card
+                                key={card.id}
+                                index={i}
+                                id={card.id}
+                                text={card.text}
+                                moveCard={moveCard}
+                                handleDeleteNames={data => handleDeleteNames(data)}
+                            />
+                        );
+                    })}
+                </div>
             </DragMainPageStyled>
         );
     }

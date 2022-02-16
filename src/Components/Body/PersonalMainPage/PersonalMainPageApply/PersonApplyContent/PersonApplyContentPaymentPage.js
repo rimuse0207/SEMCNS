@@ -8,6 +8,7 @@ import PersonApplyContentApplyModal from './PersonApplyContentModals/PersonApply
 import DragLand from './PersonApplyContentModals/PersonApplyContentDrag/DragLand';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import PersonApplyContentAcceptModal from './PersonApplyContentModals/PersonApplyContnetAcceptModal';
 
 const customStyles = {
     content: {
@@ -99,6 +100,8 @@ const PersonApplyContentPaymentPage = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [ApplyMainModalOpen, setApplyMainModalOpen] = useState(false);
     const [ApplyModalOpen, setApplyModalOpen] = useState(false);
+    const [AcceptModalOpen, setAcceptModalOpen] = useState(false);
+
     const [SendSelectApplyNames, setSendSelectApplyNames] = useState([
         {
             id: 1,
@@ -127,9 +130,48 @@ const PersonApplyContentPaymentPage = () => {
             text: '유성재',
         },
     ]);
+    const [SendSelectAcceptNames, setSendSelectAcceptNames] = useState([
+        {
+            id: 1,
+            text: '김성준',
+        },
+        {
+            id: 2,
+            text: '이지형',
+        },
+        {
+            id: 3,
+            text: '차재윤',
+        },
+    ]);
+    const [SelectAcceptNames, setSelectAcceptNames] = useState([
+        {
+            id: 1,
+            text: '김성준',
+        },
+        {
+            id: 2,
+            text: '이지형',
+        },
+        {
+            id: 3,
+            text: '차재윤',
+        },
+    ]);
+
+    const handleDeleteNames = data => {
+        console.log(data);
+        const a = SelectApplyNames.filter((list, i) => {
+            return list.text === data.text ? '' : list;
+        });
+        setSelectApplyNames(a);
+        console.log(a);
+    };
+
     const closeModal = () => {
         setApplyMainModalOpen(false);
         setApplyModalOpen(false);
+        setAcceptModalOpen(false);
         setModalIsOpen(false);
     };
     const ApplyModalhandleClicks = e => {
@@ -137,6 +179,12 @@ const PersonApplyContentPaymentPage = () => {
         setModalIsOpen(true);
         setApplyModalOpen(true);
     };
+
+    const AcceptModalhandleClicks = e => {
+        setModalIsOpen(true);
+        setAcceptModalOpen(true);
+    };
+
     return (
         <PersonApplyContentPaymentPageMainDivBox>
             <div className="PersonalApplyBodyConent_ApplyContents_Sign">
@@ -171,7 +219,7 @@ const PersonApplyContentPaymentPage = () => {
                                     <th></th>
                                     <th rowSpan={3} className="ClicksButtonMainTh">
                                         <div>처리</div>
-                                        <div className="ClicksButtonMainIcon">
+                                        <div className="ClicksButtonMainIcon" onClick={e => AcceptModalhandleClicks(e)}>
                                             <BsPlusCircle></BsPlusCircle>
                                         </div>
                                     </th>
@@ -194,11 +242,21 @@ const PersonApplyContentPaymentPage = () => {
                                     {SendSelectApplyNames.map((list, i) => {
                                         return <td>{list.text}</td>;
                                     })}
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    {Array(4 - SendSelectApplyNames.length)
+                                        .fill(0)
+                                        .map((list, i) => {
+                                            return <td></td>;
+                                        })}
+
+                                    {SendSelectAcceptNames.map((list, i) => {
+                                        return <td>{list.text}</td>;
+                                    })}
+
+                                    {Array(4 - SendSelectAcceptNames.length)
+                                        .fill(0)
+                                        .map((list, i) => {
+                                            return <td></td>;
+                                        })}
                                 </tr>
                                 <tr>
                                     <th>참조</th>
@@ -221,18 +279,37 @@ const PersonApplyContentPaymentPage = () => {
                         <PersonApplyContentApplyModal
                             setSelectApplyNames={data => setSelectApplyNames(data)}
                             SelectApplyNames={SelectApplyNames}
+                            handleDeleteNames={data => handleDeleteNames(data)}
                         ></PersonApplyContentApplyModal>
+                    ) : (
+                        <div></div>
+                    )}
+                    {AcceptModalOpen ? (
+                        <PersonApplyContentAcceptModal
+                            setSelectApplyNames={data => setSelectAcceptNames(data)}
+                            SelectApplyNames={SelectAcceptNames}
+                            // handleDeleteNames={data => handleDeleteNames(data)}
+                        ></PersonApplyContentAcceptModal>
                     ) : (
                         <div></div>
                     )}
                 </div>
                 <div>
                     <div className="PersonApplyContent_Modal_divButton">
-                        <button onClick={() => closeModal()}>취소</button>
                         <button
                             onClick={() => {
+                                setSelectApplyNames(SendSelectApplyNames);
+                                setSelectAcceptNames(SendSelectAcceptNames);
                                 closeModal();
+                            }}
+                        >
+                            취소
+                        </button>
+                        <button
+                            onClick={() => {
                                 setSendSelectApplyNames(SelectApplyNames);
+                                setSendSelectAcceptNames(SelectAcceptNames);
+                                closeModal();
                             }}
                         >
                             확인

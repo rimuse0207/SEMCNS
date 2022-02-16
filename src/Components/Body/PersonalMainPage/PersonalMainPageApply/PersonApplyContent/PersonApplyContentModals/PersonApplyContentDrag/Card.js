@@ -1,6 +1,25 @@
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes.js';
+import { TiDeleteOutline } from 'react-icons/ti';
+import styled from 'styled-components';
+
+const CardMainPageMainDivBox = styled.div`
+    display: flex;
+    flex-flow: wrap;
+    position: relative;
+    .CardContainer_DeleteButton {
+        position: absolute;
+        right: 60px;
+        top: 7px;
+        font-size: 1.1em;
+        :hover {
+            cursor: pointer;
+            color: red;
+        }
+    }
+`;
+
 const style = {
     border: '0.5px dashed gray',
     padding: '0.5rem 1rem',
@@ -10,7 +29,7 @@ const style = {
     fontSize: '0.8em',
     width: '80%',
 };
-export const Card = ({ id, text, index, moveCard }) => {
+export const Card = ({ id, text, index, moveCard, handleDeleteNames, setCards }) => {
     const ref = useRef(null);
     const [{ handlerId }, drop] = useDrop({
         accept: ItemTypes.CARD,
@@ -69,8 +88,13 @@ export const Card = ({ id, text, index, moveCard }) => {
     const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
     return (
-        <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
-            {text}
-        </div>
+        <CardMainPageMainDivBox>
+            <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
+                {text}
+            </div>
+            <div className="CardContainer_DeleteButton" onClick={() => handleDeleteNames({ text })}>
+                <TiDeleteOutline></TiDeleteOutline>
+            </div>
+        </CardMainPageMainDivBox>
     );
 };

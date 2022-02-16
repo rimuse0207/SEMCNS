@@ -12,12 +12,12 @@ const PersonApplyContentApplyModalMainDivBox = styled.div`
     }
 `;
 
-const PersonApplyContentApplyModal = ({ setSelectApplyNames, SelectApplyNames, handleDeleteNames }) => {
+const PersonApplyContentAcceptModal = ({ setSelectApplyNames, SelectApplyNames, handleDeleteNames }) => {
     return (
         <PersonApplyContentApplyModalMainDivBox>
             <div>
                 <div>
-                    <h4>신청 설정</h4>
+                    <h4>처리 설정</h4>
                 </div>
                 <div>
                     <div>
@@ -38,4 +38,4 @@ const PersonApplyContentApplyModal = ({ setSelectApplyNames, SelectApplyNames, h
         </PersonApplyContentApplyModalMainDivBox>
     );
 };
-export default PersonApplyContentApplyModal;
+export default PersonApplyContentAcceptModal;

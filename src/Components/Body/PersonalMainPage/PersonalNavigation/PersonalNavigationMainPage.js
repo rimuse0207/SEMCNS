@@ -10,7 +10,7 @@ const PersonalNavigationMainPageMainDivBox = styled.div`
     .PersonalNavigation_Box {
         border-bottom: 2px solid lightgray;
         height: 100px;
-        padding: 20px 24px 18px;
+        padding: 20px 5px 18px;
         a {
             color: #fff;
         }
@@ -34,7 +34,7 @@ const PersonalNavigationMainPageMainDivBox = styled.div`
     }
 
     .PersonalNavigation_WorkStatus {
-        padding: 20px 24px 18px;
+        padding: 20px 5px 18px;
         .PersonalNavigation_WorkStatus_HiddenShowDiv {
             height: 40px;
             line-height: 40px;
@@ -127,12 +127,14 @@ const PersonalNavigationMainPage = ({ currentPageOn }) => {
                                     <span>휴가/근무</span>
                                 </li>
                             </Link>
-                            <li>
-                                <span className="PersonalNavigation_WorkStatus_ListsShow_Icons">
-                                    <FaCalendarAlt></FaCalendarAlt>
-                                </span>
-                                <span>근무 현황</span>
-                            </li>
+                            <Link to="/personal/statistics">
+                                <li id={currentPageOn === 'statistics' ? 'PersonalNavigation_WorkStatus_CurrentPage' : ''}>
+                                    <span className="PersonalNavigation_WorkStatus_ListsShow_Icons">
+                                        <FaCalendarAlt></FaCalendarAlt>
+                                    </span>
+                                    <span>근무 현황</span>
+                                </li>
+                            </Link>
                             <li>
                                 <span className="PersonalNavigation_WorkStatus_ListsShow_Icons">
                                     <BsBarChartFill></BsBarChartFill>
